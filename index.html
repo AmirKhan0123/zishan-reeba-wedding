@@ -153,6 +153,13 @@
   .pillar.left{ left:-6px; }
   .pillar.right{ right:-6px; transform:scaleX(-1); }
 
+  .doves{ animation:doveFloat 4.5s ease-in-out infinite; }
+  @keyframes doveFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+
+  .seq{ opacity:0; transform:translateY(14px); transition:opacity 0.9s ease, transform 0.9s ease; }
+  .seq.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ .seq{ opacity:1; transform:none; } .doves{ animation:none; } }
+
   .bismillah{ color:var(--rose); font-size:1.15rem; margin-bottom:6px; }
   .bismillah-sub{ font-size:0.78rem; color:#776b5a; font-style:italic; font-family:'Cormorant Garamond',serif; margin-bottom:22px; }
   .quran{ font-size:0.88rem; color:var(--sage); font-style:italic; font-family:'Cormorant Garamond',serif; margin-bottom:28px; }
@@ -204,6 +211,17 @@
 
   /* ============ VENUE ============ */
   .venue-sec{ background:var(--paper); }
+  .fountain-wrap{ display:flex; justify-content:center; margin-bottom:10px; opacity:0.8; }
+  .drop{ animation:drip 1.8s ease-in infinite; }
+  .drop:nth-child(2){ animation-delay:0.4s; }
+  .drop:nth-child(3){ animation-delay:0.9s; }
+  @keyframes drip{
+    0%{ transform:translateY(0); opacity:0; }
+    15%{ opacity:1; }
+    80%{ opacity:0.3; }
+    100%{ transform:translateY(16px); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .drop{ animation:none; opacity:0.6; } }
   .venue-card{ max-width:400px; margin:0 auto 28px; padding:34px 24px; text-align:center; border:1px solid var(--line); background:var(--cream); position:relative; }
   .venue-card:last-child{ margin-bottom:0; }
   .venue-kicker{ font-size:0.66rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--sage); margin-bottom:6px; }
@@ -307,24 +325,24 @@
       <path d="M85 30 Q100 22 115 30" stroke="#7c8569" stroke-width="1" fill="none"/>
     </svg>
 
-    <p class="bismillah arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-    <p class="bismillah-sub">In the name of Allah, the Most Beneficent, the Most Merciful</p>
+    <p class="bismillah arabic seq" data-seq="1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="bismillah-sub seq" data-seq="2">In the name of Allah, the Most Beneficent, the Most Merciful</p>
 
-    <p class="quran">&ldquo;And We created you in pairs&rdquo;<span>— Qur'an 78:8</span></p>
+    <p class="quran seq" data-seq="3">&ldquo;And We created you in pairs&rdquo;<span>— Qur'an 78:8</span></p>
 
-    <p class="host-line">Mrs. Tabannum Fatma, W/o. Late Md. Shakeel<br>requests the pleasure of your company on the<br>auspicious occasion of</p>
-    <p class="request-line">Wedding Ceremony of their beloved son</p>
+    <p class="host-line seq" data-seq="4">Mrs. Tabannum Fatma, W/o. Late Md. Shakeel<br>requests the pleasure of your company on the<br>auspicious occasion of</p>
+    <p class="request-line seq" data-seq="4">Wedding Ceremony of their beloved son</p>
 
-    <p class="couple-names">
+    <p class="couple-names seq" data-seq="5">
       Shaikh Zishan
       <span class="weds">weds</span>
       Reeba Parween
     </p>
-    <p class="parent-tag">S/o. Late Md. Shakeel &nbsp;&amp;&nbsp; D/o. Late Md. Muzaffar Hussain</p>
+    <p class="parent-tag seq" data-seq="5">S/o. Late Md. Shakeel &nbsp;&amp;&nbsp; D/o. Late Md. Muzaffar Hussain</p>
 
-    <p class="presence-note">&ldquo;Your Presence will make our day more special &amp; memorable&rdquo;</p>
+    <p class="presence-note seq" data-seq="6">&ldquo;Your Presence will make our day more special &amp; memorable&rdquo;</p>
 
-    <p class="scroll-cue">Scroll to continue ↓</p>
+    <p class="scroll-cue seq" data-seq="7">Scroll to continue ↓</p>
   </div>
 </header>
 
@@ -426,6 +444,25 @@
 <!-- ============ VENUES ============ -->
 <section class="venue-sec">
   <div class="inner">
+    <div class="fountain-wrap">
+      <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#8c1f32" stroke-width="1">
+          <ellipse cx="45" cy="78" rx="34" ry="7"/>
+          <rect x="18" y="70" width="54" height="8" rx="2"/>
+          <rect x="40" y="46" width="10" height="24"/>
+          <ellipse cx="45" cy="46" rx="18" ry="5"/>
+          <rect x="42" y="30" width="6" height="16"/>
+          <ellipse cx="45" cy="30" rx="9" ry="3.5"/>
+          <line x1="45" y1="30" x2="45" y2="18"/>
+        </g>
+        <g fill="#7ba0ad">
+          <circle class="drop" cx="38" cy="22" r="1.6"/>
+          <circle class="drop" cx="45" cy="18" r="1.6"/>
+          <circle class="drop" cx="52" cy="22" r="1.6"/>
+        </g>
+      </svg>
+    </div>
+
     <p class="eyebrow">The Venues</p>
     <h2 class="headline reveal">Where to Find Us</h2>
     <div class="flourish"></div>
@@ -497,6 +534,12 @@
     }, 1100);
     bgm.volume = 0.6;
     bgm.play().then(function(){ musicToggle.classList.add('playing'); }).catch(function(){});
+
+    // Cascade the opening text in, one line at a time, like the reel
+    document.querySelectorAll('.seq').forEach(function(el){
+      var step = +el.dataset.seq || 1;
+      setTimeout(function(){ el.classList.add('in'); }, 1100 + step * 450);
+    });
   }
   tapOpen.addEventListener('click', openEnvelope);
   tapLabel.addEventListener('click', openEnvelope);
